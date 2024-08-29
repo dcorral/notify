@@ -1,0 +1,16 @@
+notify
+*.o
+*.out
+*.log
+*.tmp
+*~
+*.swp
+*.swo
+*.bak
+*.orig
+*.sdl_cache
+*.so
+*.dll
+*.dylib
+.DS_Store
+
