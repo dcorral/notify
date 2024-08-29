@@ -1,0 +1,38 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Update and Upgrade
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade -y
+
+      - name: Set up SDL2
+        run: sudo apt-get install -y libsdl2-dev
+
+      - name: Compile the notify binary
+        run: make
+
+      - name: Upload notify binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: notify
+          path: notify
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: notify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
